@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+
+</head>
+<body>
+    <div class="left"></div>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+    <script type="text/javascript">
+        var a = "abcdefg";
+        // alert(a.substring(4));
+        // 闭包应用
+        /*window.onload = function () {
+            var li = document.getElementsByTagName('li');
+            for (var i = 0; i < li.length; i++) {
+                li[i].onclick = function (n) {
+                    return function () {
+                        alert("这是第"+(n+1)+"个");
+                    }
+                }(i);
+            }
+        }*/
+        //哈希表去重
+        function unique () {
+            var result = [],
+                hash = {},
+                len = this.length;
+            for (var i = 0; i < len; i++) {
+                if (!hash[this[i]]) {
+                    hash[this[i]] = true;
+                    result.push(this[i]);                   
+                }
+            }
+            return result;
+        }
+        var a = [1,1,2,3,3,4,5,6,6];
+        
+        
+        /*function un2 () { 
+            var n = {},r=[]; //n为hash表，r为临时数组
+                for(var i = 0; i < this.length; i++) //遍历当前数组
+                {
+                    if (!n[this[i]]) //如果hash表中没有当前项
+                    {
+                        n[this[i]] = true; //存入hash表
+                        r.push(this[i]); //把当前数组的当前项push到临时数组里面
+                    }
+                }
+            return r;
+        }
+        alert(un2(a));*/
+        var str = "abbsssdiifaljfie";
+        var hash = {};
+        var arr = [];
+        for (var i = 0; i < str.length; i++) {
+            if (!hash[str[i]]) {
+                hash[str[i]] = 1;
+            }else {
+                hash[str[i]]++;
+            }
+        }
+        var maxKey,maxNum = 0;
+        for (key in hash) {
+            if (hash.hasOwnProperty(key)) {
+                if (maxNum<hash[key]) {
+                    maxNum = hash[key];
+                    maxKey = key;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

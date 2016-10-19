@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<style type="text/css">
+		div.arrow-left {
+		  width:0px;
+		  height:0px;
+		  border-bottom:5px solid transparent;  /* left arrow slant */
+		  border-top:5px solid transparent; /* right arrow slant */
+		  border-right:5px solid #2f2f2f; /* bottom, add background color here */
+		  font-size:0px;
+		  line-height:0px;
+		}
+	</style>
+</head>
+<body>
+<div class="arrow-left">123</div>
+<a href="javascript：SetValue('1')">value 1</a><br/> 
+<a href="javascript：SetValue('2')">value 2</a> 
+<a href="#" onclick="getvalue();" id="div1">跳转</a>
+<script type="text/javascript">
+  //window.open打开的窗口.
+//利用opener指向父窗口.
+function getvalue() { 
+  var pare=window.opener; 
+  if(pare!== null) { 
+    var what=pare.document.getElementById("div1"); 
+    if(what!== null) { 
+      alert(what.value);
+    } 
+  } 
+}		
+    
+function SetValue(value) 
+{ 
+self.opener.document.all("tbValue").innerHTML=value; 
+}
+    
+    /**
+    * 利用a标签处理URL参数
+    * @param  {[type]} url [description]
+    * @return {[type]}     [description]
+    * @return {[type]} host  
+    */
+	function parseURL(url) {
+	      var a =  document.createElement('a');
+	      a.href = url;
+	      return {
+	          source: url,
+	          protocol: a.protocol.replace(':',''),
+	          host: a.hostname,
+	          port: a.port,
+	          query: a.search,
+	          params: (function(){
+	              var ret = {},
+	                  seg = a.search.replace(/^\?/,'').split('&'),
+	                  len = seg.length, i = 0, s;
+	              for (;i<len;i++) {
+	                  if (!seg[i]) { continue; }
+	                  s = seg[i].split('=');
+	                  ret[s[0]] = s[1];
+	              }
+	              return ret;
+	          })(),
+	          file: (a.pathname.match(/\/([^\/?#]+)$/i) || [,''])[1],
+	          hash: a.hash.replace('#',''),
+	          path: a.pathname.replace(/^([^\/])/,'/$1'),
+	          relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [,''])[1],
+	          segments: a.pathname.replace(/^\//,'').split('/')
+	      };
+  }
+  // var aa = parseURL('http://www.xx.com?a=12&b=34&c=&d=dfdf&e');
+  // console.log(aa);
+
+  /**
+   * 给手机号中间几位变星号
+   * @param  {[type]} str      手机号
+   * @param  {[type]} frontLen 开始长度
+   * @param  {[type]} endLen   结束长度
+   * @return {[type]}          带星号手机号
+   */
+	function plusXing (str,frontLen,endLen) {     
+	    var len = str.length-frontLen-endLen;    
+	    var xing = '';    
+	    for (var i=0;i<len;i++) {        
+	      xing+='*';    
+	    }
+	    return str.substr(0,frontLen)+xing+str.substr(str.length-endLen);
+	}
+  var b = '13998877665';
+  var a = plusXing(b,3,4);
+
+  var x = 3;
+
+</script>
+</body>
+</html>
