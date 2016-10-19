@@ -6,7 +6,7 @@
     {{ message + 1 }}
     <button v-on:click="reverseMessage">reverse message</button>
   </span>
-  <p v-bind:style="styleObject">Computed Message: {{ reverseMessage + now }}</p>
+  <p v-bind:style="styleObject">Computed Message: {{ revMessage + now }}</p>
 </div>
 
 <p id="demo" class="nav" v-bind:class="classObject">
@@ -20,9 +20,16 @@
 
 <div id="app3">
   <ul>
-    <li v-for="item in items">
-      {{ item.message }}      
-    </li>
+    <template v-for="item in items">
+      <li>{{ item.message }}</li>
+      <li class="divider">11</li>
+    </template>
+  </ul>
+  <ul>
+    <li v-for="(value,key) in people">{{ key }} : {{ value }}</li>
+  </ul>
+  <ul>
+    <li v-for="n in num">{{ n }}</li>
   </ul>
 </div>
 <script>
@@ -42,7 +49,7 @@
       }
     },
     computed: {
-      reverseMessage: function() {
+      revMessage: function() {
         return this.message.split('').reverse().join('');
       },
       now: function() {
@@ -86,7 +93,20 @@ var app3 = new Vue({
     items: [
       { message: 'add' },
       { message: 'plus' }
-    ]
+    ],
+    people: {
+      firstName: 'karl',
+      lastName: 'smith',
+      age: 40
+    },
+    numbers: [ 1,2,3,4,5,6 ]
+  },
+  computed: {
+    num: function() {
+      return this.numbers.filter(function(number) {
+        return number % 2 === 0;
+      });
+    }
   }
 });
 </script>
