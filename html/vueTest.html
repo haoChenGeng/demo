@@ -8,7 +8,23 @@
   </span>
   <p v-bind:style="styleObject">Computed Message: {{ reverseMessage + now }}</p>
 </div>
-<p id="demo" class="nav" v-bind:class="classObject">{{ fullName }}</p>
+
+<p id="demo" class="nav" v-bind:class="classObject">
+  {{ fullName }}
+  <template v-if="ok">
+    <h1>title</h1>
+    <p>paragraph 1</p>
+    <p>paragraph 2</p>
+  </template>
+</p>
+
+<div id="app3">
+  <ul>
+    <li v-for="item in items">
+      {{ item.message }}      
+    </li>
+  </ul>
+</div>
 <script>
 
   var app2 = new Vue({
@@ -41,7 +57,8 @@
       firstName: 'foo',
       lastName: 'bar',
       isActive: true,
-      error: false
+      error: false,
+      ok: true
     },
     computed: {
       fullName: {
@@ -63,5 +80,13 @@
     }
   });
 
-
+var app3 = new Vue({
+  el: '#app3',
+  data: {
+    items: [
+      { message: 'add' },
+      { message: 'plus' }
+    ]
+  }
+});
 </script>
