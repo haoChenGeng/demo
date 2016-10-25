@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" autofocus autocomplete name="" id="123" value="42220219900508005X">
+    <pre>
+    	
+    		var fruits = ['apple','orange','mango'];
+    		for (var i = 0,len = fruits.length;i < len; i ++) {
+    			document.writeln('I like' + fruits[i]);
+    		}
+    </pre>
+<script type="text/javascript">
+	var reg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|x|X)$/;
+	var my = document.getElementById('123').value;
+	if (reg.test(my)) {
+		alert('correct');
+	}else {
+		alert('wrong');
+	}
+	// function hehe() {
+	// 	console.log(reg);
+	// }
+	var a = /^[0-9]{3}/;
+	function hehe() {
+		console.log(reg);
+		var reg = 2;
+		console.log(a);
+	}
+	hehe();
+</script>
+</body>
+</html>

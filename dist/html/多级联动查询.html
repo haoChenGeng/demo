@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="element_id">
+        <select class="provice" data-value="小牛">
+            <!-- <option value="">请选择</option> -->
+        </select>
+        <select class="unit" data-value="营销部">
+            <!-- <option value="">请选择</option> -->
+        </select>
+        <select class="city" data-value="深圳区">
+            <!-- <option value="">请选择</option> -->
+        </select>
+        <select class="group" data-value="第一事业部">
+            <!-- <option value="">请选择</option> -->
+        </select>
+    </div>
+<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="jquery.cxselect.js"></script>
+<script type="text/javascript">
+    $('#element_id').cxSelect({
+        selects: ['provice','unit','city','group'],
+        jsonValue: 'val',
+        jsonName: 'n',
+        jsonSub: 'menu',
+        data: [
+            {'val': '1', 'n': '第一级 >', 'menu': [
+              {'val': '2', 'n': '第二级 >', 'menu': [
+                {'val': '3', 'n': '第三级 >', 'menu': [
+                  {'val': '4', 'n': '第四级 >', 'menu': [
+                    {'val': '5', 'n': '第五级 >', 'menu': [
+                      {'val': '6', 'n': '第六级 >'}
+                    ]}
+                  ]}
+                ]}
+              ]}
+            ]},
+            {'val': 'test number', 'n': '测试数字', 'menu': [
+              {'val': 'text', 'n': '文本类型', 'menu': [
+                {'val': '4', 'n': '4'},
+                {'val': '5', 'n': '5'},
+                {'val': '6', 'n': '6'},
+                {'val': '7', 'n': '7'},
+                {'val': '8', 'n': '8'},
+                {'val': '9', 'n': '9'},
+                {'val': '10', 'n': '10'}
+              ]},
+              {'val': 'number', 'n': '数值类型', 'menu': [
+                {'val': 11, 'n': 11},
+                {'val': 12, 'n': 12},
+                {'val': 13, 'n': 13},
+                {'val': 14, 'n': 14},
+                {'val': 15, 'n': 15},
+                {'val': 16, 'n': 16},
+                {'val': 17, 'n': 17}
+              ]}
+            ]},
+            {'val': 'test boolean','n': '测试 Boolean 类型', 'menu': [
+              {'val': true ,'n': true},
+              {'val': false ,'n': false}
+            ]},
+            {val: 'test quotes', n: '测试属性不加引号', menu: [
+              {val: 'quotes', n: '引号'}
+            ]},
+            {val: 'test other', n: '测试奇怪的值', menu: [
+              {val: '[]', n: '数组（空）'},
+              {val: [1,2,3], n: '数组（数值）'},
+              {val: ['a','b','c'], n: '数组（文字）'},
+              {val: new Date(), n: '日期'},
+              {val: new RegExp('\\d+'), n: '正则对象'},
+              {val: /\d+/, n: '正则直接量'},
+              {val: {}, n: '对象'},
+              {val: document.getElementById('custom_data'), n: 'DOM'},
+              {val: null, n: 'Null'},
+              {n: '未设置 value'}
+            ]},
+            {'val': '' , 'n': '无子级'}
+        ]
+    });
+</script>
+</body>
+</html>

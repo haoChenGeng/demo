@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>闭包</title>
+</head>
+<body>
+    <ul>
+        <li style="width: 200px;height: 30px;background: #eee;margin-bottom: 10px;cursor: pointer;">1</li>
+        <li style="width: 200px;height: 30px;background: #eee;margin-bottom: 10px;cursor: pointer;">2</li>
+        <li style="width: 200px;height: 30px;background: #eee;margin-bottom: 10px;cursor: pointer;">3</li>
+        <li style="width: 200px;height: 30px;background: #eee;margin-bottom: 10px;cursor: pointer;">4</li>
+        <li style="width: 200px;height: 30px;background: #eee;margin-bottom: 10px;cursor: pointer;">5</li>
+    </ul>
+    <form action="http://www.baidu.com?wd=">
+        <input type="email" placeholder="h3245674@gmail.com" data-code="123" pattern="[0-9]{3}" title="请输入3位数">
+        <input type="submit" value="提交" name="123" id="">
+        <progress max="50" value="4">10%</progress>
+        <fieldset>
+            <legend>123</legend>
+        </fieldset>
+    </form>
+    <a href="../js/login.js" >下载js</a>
+<script type="text/javascript">
+    window.onload = function () {
+        var li = document.getElementsByTagName('li');
+        for (var i = li.length - 1; i >= 0; i--) {
+            li[i].onclick = (function (n) {
+                return function () {
+                    alert(n+1);
+                };
+            })(i);
+        }
+
+        for (var j = li.length - 1; i >= 0; i--) {
+            (function (n) {
+                li[li].onclick = function () {
+                    alert(n+1);
+                };
+            })(i);
+        }
+    };  
+</script>
+</body>
+</html>
