@@ -1,0 +1,98 @@
+<meta charset="utf-8"> 
+<script src="../js/vue.js"></script>
+<style>
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-active {
+    opacity: 0;
+  }
+
+  .bounce-enter-active {
+    animation: bounce-in .5s;
+  }
+  .bounce-leave-active {
+    animation: bounce-out .5s;
+  }
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes bounce-out {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+
+  .component-fade-enter-active, .component-fade-leave-active {
+    transition: opacity .3s ease;
+  }
+  .component-fade-enter, .component-fade-leave-active {
+    opacity: 0;
+  }
+</style>
+
+
+<div id="demo" style="width:200px;margin:20px auto;">
+  <button v-on:click="show = !show">toggle</button>
+  <transition name="fade">
+    <p v-if="show">hello</p>
+  </transition>
+</div>
+
+<div id="example" style="width:200px;margin:20px auto;">
+  <button @click="show = !show">toggle</button>
+  <transition name="bounce">
+    <p v-if="show">let me see</p>
+  </transition>
+</div>
+
+<div id="app" style="width:200px;margin:20px auto;">
+  <transition name="component-fade" mode="out-in">
+    <component v-bind:is="view"></component>
+  </transition>
+</div>
+
+<script>
+  new Vue({
+    el: '#demo',
+    data: {
+      show: true
+    }
+  });
+
+  new Vue({
+    el: '#example',
+    data: {
+      show: true
+    }
+  });
+
+  new Vue({
+    el: '#app',
+    data: {
+      view: 'v-a'
+    },
+    components: {
+      'v-a': {
+        template: '<div>component A</div>'
+      },
+      'v-b': {
+        template: '<div>component B</div>'
+      }
+    }
+  });
+</script>
