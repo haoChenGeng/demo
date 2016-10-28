@@ -1,0 +1,25 @@
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+    <input type="button" value="测试" onclick="ShowImg();" />
+    <div id="div1"></div>
+    <div id="div2"></div>
+</body>
+</html>
+<script type="text/javascript">
+function ShowImg() {
+    var div1 = document.getElementById("div1");
+    var div2 = document.getElementById("div2");
+    div1.innerHTML = "<img src='http://www.w3cfuns.com/uc_server/images/noavatar_big.gif' />";
+   
+    var img = new Image();
+    img.onload = function() {
+        div1.innerHTML = "";
+        div1.appendChild(img);
+    };
+    img.src = "http://www.xiaoniuxcf.com/upload/img/2016-05-26/08d100bf-f8a3-404b-af9e-5b0255759e1f.jpg";
+}
+</script>
