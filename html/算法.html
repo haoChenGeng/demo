@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>算法test</title>
+</head>
+<body>
+<script>
+    /**
+     * reverse String
+     * @param  {String} str String
+     * @return {String}     String
+     */
+    var reverseStr = function(str) {
+        return str = str.split('').reverse().join('');
+    };
+
+    /**
+     * unique array
+     * @param  {Array} arr Array
+     * @return {Array}     Array
+     */
+    var uniqueArr = function(arr) {
+        var hashTable = {};
+        var resultArr = [];
+        for (var i = arr.length - 1; i >= 0; i--) {
+            if (!hashTable[arr[i]]) {
+                hashTable[arr[i]] = true;
+                resultArr.push(arr[i]);
+            }
+        }
+        return resultArr;
+    };
+
+    var findMaxDuplicate = function(str) {
+        if (str.length === 1) { return str; }          
+        var charObj = {};
+        for (var i = str.length - 1; i >= 0; i--) {
+            if (!charObj[str.charAt(i)]) {
+                charObj[str.charAt(i)] = 1;
+            }else {
+                charObj[str.charAt(i)] += 1;
+            }
+        }
+        var maxChar = '';
+        var maxValue = 1;
+        for (var k in charObj) {
+            if (charObj[k] >= maxValue) {
+                maxChar = k;
+                maxValue = charObj[k];
+            }
+        }
+        return maxChar;
+    };
+
+    var bubbleSort = function(arr) {
+        for (var i = arr.length - 1; i >= 0; i--) {
+            for (var j = i+1; j >= 0; j--) {
+                if (arr[i] > arr[j]) {
+                    var tem = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = tem;
+                }
+            }   
+        }
+        return arr;  
+    };
+
+    var quickSort = function(arr) {
+        if (arr.length <= 1) {
+            return arr;
+        }
+
+        // var pivot = arr.splice(Math.floor(arr.length/2),1)[0];   //选取中间值为基准值，并从原数组删除
+        var pivot = arr.splice(0,1)[0]; //选取第一项为基准值，并从原数组删除
+        var leftArr = [];
+        var rightArr = [];
+        for (var i = arr.length - 1; i >= 0; i--) {
+            if (arr[i] > pivot) {
+                rightArr.push(arr[i]);
+            }else {
+                leftArr.push(arr[i]);
+            }
+        }
+        return [].concat(quickSort(leftArr),[pivot],quickSort(rightArr));
+    };  
+
+    var getMaxProfit = function(a) {
+        var arr = a.join(',').split(',');
+        var maxProfit = Math.max.apply(Math,arr);
+        var minProfit = Math.min.apply(Math,arr);
+        return maxProfit - minProfit;
+    };
+
+    var randomString = function(n) {
+        var str = 'abcdefghijklmnopqrstuvwxyz1234567890';
+        var tmp = '';
+        for (var i = 0; i < n; i++) {
+            tmp += str.charAt(Math.floor(Math.random() * str.length));
+        }
+        return tmp;  
+    };
+</script>
+</body>
+</html>
