@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>sortable组件</title>
+<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../js/core.js"></script>
+<script type="text/javascript" src="../js/widget.js"></script>
+<script type="text/javascript" src="../js/mouse.js"></script>
+<script type="text/javascript" src="../js/sortable.js"></script>
+<link href="CSS/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.message_box {
+ width:180px;
+ height:200px;
+ filter:dropshadow(color=#666666, offx=3, offy=3, positive=2);
+ float:left;
+ margin-right:10px;
+}
+#mask {
+ position:absolute;
+ top:0;
+ left:0;
+width:expression(body.clientWidth);
+height:expression(body.clientHeight);
+ background:#666;
+ filter:ALPHA(opacity=60);
+ z-index:1;
+ visibility:hidden
+}
+.message {
+ border:#036 solid;
+ border-width:1 1 3 1;
+ width:95%;
+ height:95%;
+ color:#036;
+ font-size:12px;
+ line-height:150%;
+ background:#FFF
+}
+.header {
+ background:#036;
+ height:22px;
+ font-family:Verdana, Arial, Helvetica, sans-serif;
+ font-size:12px;
+ padding:3px 5px 0px 10px;
+ color:#fff;
+ cursor:move;
+}
+ul {
+ margin-left:10px;
+ margin-right:10px;
+ background: #eee;
+ padding: 5px;
+ width: 150px;
+}
+li {
+ font-size:14px;
+}
+.header div {
+ display:inline;
+ width:150px;
+}
+.header span {
+ float:right;
+ display:inline;
+ cursor:hand;
+}
+.file, .folder {
+ width: 60px;
+ float: left;
+ margin-right: 10px;
+}
+.file em, .folder em {
+ clear: both;
+ font-size: 12px;
+ font-style: normal;
+ text-decoration: underline;
+}
+.droppable {
+ height:200px;
+ overflow: auto;
+}
+#res {
+ clear:both
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+ var msg = "";
+ function callback(e, ui) {  
+  if (e.type == "sortstart") {
+   msg = "你选择了游戏：" + ui.item.text();
+   $("#res").empty();
+  } else if (e.type == "sortremove") {
+   msg += "，从列表" + e.target.id;
+  } else if (e.type == "sortreceive") {
+   msg += "移至列表" + e.target.id + "。";
+  } else if (e.type == "sortstop") {
+   $("#res").append(msg);
+  }
+ }
+ $("ul").sortable({  
+  connectWith: "ul",
+  start: callback,
+  remove: callback,
+  receive: callback,
+  stop: callback
+ }).disableSelection();
+ $("#sortable2").sortable({ "dropOnEmpty":false});
+});
+</script>
+</head>
+<body>
+<div id="message_box1" class="message_box" >
+  <div class="message" >
+    <div class="header">
+      <div>休闲类小游戏</div>
+      <span>×</span></div>
+    <ul id="sortable1">
+      <li>菠萝蛋糕 </li>
+      <li>人品计算器 </li>
+      <li>我的恐怖小屋</li>
+      <li>品茗闻香话茶道 </li>
+      <li>暴打火柴人中文版</li>
+    </ul>
+  </div>
+</div>
+<div id="message_box1" class="message_box" >
+  <div class="message" >
+    <div class="header">
+      <div>动作类小游戏</div>
+      <span>×</span></div>
+    <ul id="sortable2">
+      <li>奥特曼之狼人传说 </li>
+      <li>企鹅战斗机 </li>
+      <li>月蚀之刃</li>
+      <li>终极拳皇 </li>
+      <li>大满贯决赛 </li>
+    </ul>
+  </div>
+</div>
+<div id="message_box1" class="message_box" >
+  <div class="message" >
+    <div class="header">
+      <div>精品游戏</div>
+      <span>×</span></div>
+    <ul id="sortable3">
+    </ul>
+  </div>
+</div>
+<div id="res"></div>
+</body>
+</html>

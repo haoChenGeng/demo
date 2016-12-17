@@ -1,0 +1,22 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "��d\u0000e\u0000m\u0000o\u0000 \u0000f\u0000o\u0000r\u0000 \u0000t\u0000e\u0000s\u0000t\u0000\r\u0000 \u0000",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haochengeng/demo.git"
+  },
+  "author": "hcg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haochengeng/demo/issues"
+  },
+  "homepage": "https://github.com/haochengeng/demo#readme",
+  "devDependencies": {
+    "gulp-uglify": "^2.0.0"
+  }
+}

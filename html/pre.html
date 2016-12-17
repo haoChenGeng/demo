@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<p style="white-space: pre-wrap;">
+	It is now #platform=x86, AMD64, or Intel EM64T
+# System authorization information
+auth  --useshadow  --enablemd5
+# System bootloader configuration
+bootloader --location=mbr --driveorder=sda
+# Partition clearing information
+clearpart --all --initlabel
+# Use text mode install
+text
+# Firewall configuration
+firewall --enabled
+# Run the Setup Agent on first boot
+firstboot --disable
+# System keyboard
+keyboard us
+# System language
+lang en_US
+# Use network installation
+url --url=http://10.8.36.10/cblr/links/centos6.8-x86_64
+# If any cobbler repo definitions were referenced in the kickstart profile, include them here.
+repo --name=centos6.8-x86_64-updates --baseurl=http://10.8.36.10/cobbler/repo_mirror/centos6.8-x86_64-updates
+repo --name=centos6.8-x86_64-base --baseurl=http://10.8.36.10/cobbler/repo_mirror/centos6.8-x86_64-base
+
+# Network information
+network --bootproto=dhcp --device=eth0 --onboot=on  
+
+# Reboot after installation
+reboot
+
+#Root password
+rootpw --iscrypted $1$wonderfu$bg/Vv6cGWkTCNbfPV7CIs0
+# SELinux configuration
+selinux --disabled
+# Do not configure the X Window System
+skipx
+# System timezone
+timezone  Asia/Shanghai
+# Install OS instead of upgrade
+install
+# Clear the Master Boot Record
+zerombr
+#Disk partitioning information
+part pv.01 --size=1 --grow --ondisk=/dev/sda
+volgroup vg_root pv.01
+logvol  /  --vgname=vg_root  --size=10000 --grow --maxsize=50000 --name=lv_root
+part swap --recommended --ondisk=/dev/sda
+part /boot --fstype ext4 --size=500 --ondisk=/dev/sda
+
+%pre
+set -x -v
+exec 1&gt;/tmp/ks-pre.log 2&gt;&amp;1
+
+# Once root's homedir is there, copy over the log.
+while : ; do
+    sleep 10
+    if [ -d /mnt/sysimage/root ]; then
+        cp /tmp/ks-pre.log /mnt/sysimage/root/
+        logger "Copied %pre section log to system"
+        break
+    fi
+done &amp;
+
+
+curl "http://10.8.36.10/cblr/svc/op/trig/mode/pre/profile/dell_common_centos6.8" -o /dev/null
+
+# Enable installation monitoring
+
+
+%packages
+
+
+
+
+zabbix-agent
+
+%post --nochroot
+set -x -v
+exec 1&gt;/mnt/sysimage/root/ks-post-nochroot.log 2&gt;&amp;1
+
+%end
+
+%post
+set -x -v
+exec 1&gt;/root/ks-post.log 2&gt;&amp;1
+
+# Start yum configuration 
+curl "http://10.8.36.10/cblr/svc/op/yum/profile/dell_common_centos6.8" --output /etc/yum.repos.d/cobbler-config.repo
+
+# End yum configuration
+
+
+
+# Start post_install_network_config generated code
+# End post_install_network_config generated code
+
+
+
+
+# start puppet registration 
+# end puppet registration
+
+# Start download cobbler managed config files (if applicable)
+# End download cobbler managed config files (if applicable)
+
+# Start koan environment setup
+echo "export COBBLER_SERVER=10.8.36.10" &gt; /etc/profile.d/cobbler.sh
+echo "setenv COBBLER_SERVER 10.8.36.10" &gt; /etc/profile.d/cobbler.csh
+# End koan environment setup
+
+# begin Red Hat management server registration
+# not configured to register to any Red Hat management server (ok)
+# end Red Hat management server registration
+
+# Begin cobbler registration
+if [ -f "/usr/bin/cobbler-register" ]; then
+    cobbler-register --server=10.8.36.10 --fqdn '*AUTO*' --profile=dell_common_centos6.8 --batch
+fi
+# End cobbler registration
+
+# Enable post-install boot notification
+
+curl -o /root/osinit.sh http://10.8.36.10/cobbler/pub/script/OSinit.sh
+cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
+cd /etc/yum.repos.d &amp;&amp; curl -o CentOS-Base.repo  http://mirrors.163.com/.help/CentOS6-Base-163.repo
+bash /root/osinit.sh $(hostname)
+
+# Start final steps
+
+curl "http://10.8.36.10/cblr/svc/op/ks/profile/dell_common_centos6.8" -o /root/cobbler.ks
+curl "http://10.8.36.10/cblr/svc/op/trig/mode/post/profile/dell_common_centos6.8" -o /dev/null
+# End final steps
+.
+</p>
+</body>
+</html>

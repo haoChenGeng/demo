@@ -1,6 +1,7 @@
 //定义依赖和插件
 var gulp = require('gulp'),
   connect = require('gulp-connect'); //livereload
+var uglify = require('gulp-uglify');
 
 //定义名为js的任务
 /* gulp.task('js', function() {
