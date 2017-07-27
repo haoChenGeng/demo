@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>tab封装</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    
+    .container {
+      width: 800px;
+      margin: 50px auto;
+    }
+    
+    h3 {
+      margin-top: 40px;
+    }
+    
+    .tab-wrap {
+      width: 800px;
+      margin-top: 10px;
+    }
+    
+    .tab-wrap dl {
+      overflow: hidden;
+      display: flex;
+    }
+    
+    .tab-wrap dl dd {
+      flex: 1;
+      height: 50px;
+      background: #f0f0f0;
+      text-align: center;
+      line-height: 50px;
+      cursor: pointer;
+    }
+    
+    .tab-wrap dl dd.cur {
+      background: #666;
+      color: #fff;
+    }
+    
+    .tab-wrap dl dd+dd {
+      margin-left: 2px;
+    }
+    
+    .tab-wrap ul {
+      border: 1px solid #f0f0f0;
+      padding: 20px;
+    }
+    
+    .tab-wrap ul li {
+      display: none;
+    }
+    
+    .tab-wrap ul li.current {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h3>点击切换</h3>
+    <div class="tab-wrap tab-1">
+      <dl>
+        <dd>menu1</dd>
+        <dd>menu2</dd>
+        <dd>menu3</dd>
+        <dd>menu4</dd>
+      </dl>
+      <ul>
+        <li>content1</li>
+        <li>content2</li>
+        <li>content3</li>
+        <li>content4</li>
+      </ul>
+    </div>
+    <h3>悬停切换</h3>
+    <div class="tab-wrap tab-2">
+      <dl>
+        <dd>menu1</dd>
+        <dd>menu2</dd>
+        <dd>menu3</dd>
+        <dd>menu4</dd>
+      </dl>
+      <ul>
+        <li>content1</li>
+        <li>content2</li>
+        <li>content3</li>
+        <li>content4</li>
+      </ul>
+    </div>
+    <h3>默认选中其他的</h3>
+    <div class="tab-wrap tab-3">
+      <dl>
+        <dd>menu1</dd>
+        <dd>menu2</dd>
+        <dd>menu3</dd>
+        <dd>menu4</dd>
+      </dl>
+      <ul>
+        <li>content1</li>
+        <li>content2</li>
+        <li>content3</li>
+        <li>content4</li>
+      </ul>
+    </div>
+    <h3>带自动播放的点击切换</h3>
+    <div class="tab-wrap tab-4">
+      <dl>
+        <dd>menu1</dd>
+        <dd>menu2</dd>
+        <dd>menu3</dd>
+        <dd>menu4</dd>
+      </dl>
+      <ul>
+        <li>content1</li>
+        <li>content2</li>
+        <li>content3</li>
+        <li>content4</li>
+      </ul>
+    </div>
+  </div>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+    function tabChange(o) {
+      var initData = {
+        "box": $(".tab-wrap"), //容器
+        "autoplay": false,
+        "delay": 3000,
+        "index": 1,
+        "event": "click",
+        "curTitle": "cur",
+        "curCont": "current"
+      }
+
+      var _o = $.extend({}, initData, o);
+      var _selectTitle = _o.box.find("dl>dd");
+      var _selectCont = _o.box.find("ul>li");
+      var _index = _o.index - 1;
+      var _event = _o.event;
+      var _auto = _o.autoplay;
+      var _box = _o.box;
+      var _delay = _o.delay;
+
+      _selectTitle.eq(_index).addClass(_o.curTitle);
+      _selectCont.eq(_index).addClass(_o.curCont);
+
+      if (_o.autoplay) {
+        var inter;
+        var interAuto = function() {
+          if (_index < _selectTitle.length - 1) {
+            _index++;
+          } else {
+            _index = 0;
+          }
+          _selectTitle.eq(_index).addClass(_o.curTitle).siblings().removeClass(_o.curTitle);
+          _selectCont.eq(_index).addClass(_o.curCont).siblings().removeClass(_o.curCont);
+        }
+
+        inter = setInterval(interAuto, _o.delay);
+      }
+
+      _selectTitle.each(function() {
+        var _self = $(this);
+        _self.bind(_event, function() {
+          console.log(_event);
+          if (_o.autoplay && _event == 'mouseover') {
+            clearInterval(inter);
+          } else if (_o.autoplay && _event == 'click') {
+            clearInterval(inter);
+            inter = setInterval(interAuto, _o.delay);
+          }
+
+          if (_self.hasClass(_o.curTitle)) {
+            return false;
+          }
+          _index = _self.index();
+          _selectTitle.eq(_index).addClass(_o.curTitle).siblings().removeClass(_o.curTitle);
+          _selectCont.eq(_index).addClass(_o.curCont).siblings().removeClass(_o.curCont);
+        })
+        _self.bind('mouseleave', function() {
+          if (_o.autoplay && _event == 'mouseover') {
+            inter = setInterval(interAuto, _o.delay);
+          }
+        })
+      })
+
+    }
+
+    tabChange({
+      "box": $('.tab-1')
+    });
+
+    tabChange({
+      "box": $('.tab-3'),
+      "index": 3
+    })
+
+    tabChange({
+      "box": $('.tab-2'),
+      "event": "mouseover"
+    })
+
+    tabChange({
+      "box": $('.tab-4'),
+      "autoplay": true
+    })
+  </script>
+</body>
+
+</html>
