@@ -18,16 +18,20 @@ var uglify = require('gulp-uglify');
 
 //定义html任务
 gulp.task('html', function() {
-
   gulp.src('html/*.html')
     .pipe(connect.reload());
+});
 
+gulp.task('json', function() {
+  gulp.src('echart/*.json')
+    .pipe(connect.reload());
 });
 
 //定义livereload任务
 gulp.task('connect', function() {
   connect.server({
-    livereload: true
+    livereload: true,
+    port: 8011
   });
 });
 
@@ -37,7 +41,13 @@ gulp.task('watch', function() {
 
   gulp.watch('html/*.html', ['html']);
 
+  gulp.watch('echart/*.html', ['html']);
+
+  // gulp.watch('echart/*.json', ['json']);
+
   gulp.watch('js/*.js', ['js']);
+
+  gulp.watch('css/*.css', ['css']);
 
 });
 

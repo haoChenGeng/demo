@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>graph</title>
+  <style>
+    @keyframes rotate-frame {
+      //定义动画关键帧
+      0% {
+        transform: rotateZ(0deg);
+      }
+      100% {
+        transform: rotateZ(-360deg);
+      }
+    }
+    
+    .bg {
+      /* transform-style:preserve-3d;    //容器内的元素随着容器一起转 */
+      animation: rotate-frame 40s infinite linear; //应用关键帧动画
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap" style="position:relative;">
+    <div class="bg" style="width:621px;height:616px;background:url(imgs/bg.png) center 100%;background-repeat: no-repeat;position:absolute;top:73px;left:50%;margin-left: -310px;"></div>
+    <div id="dataMap" style="width: 800px;height: 800px;margin: 0 auto;">
+      
+    </div>
+  </div>
+  <script src="../js/echarts.js"></script>
+  <script src="../js/jquery.min.js"></script>
+  <script>
+    var myChart = echarts.init(document.getElementById('dataMap'));
+    myChart.showLoading();
+
+    $.getJSON('dataMap.json', function(json) {
+      myChart.hideLoading();
+      myChart.setOption(option = {
+        title: {
+          text: 'data-map'
+        },
+        animationDurationUpdate: 1500,
+        animationEasingUpdate: 'quinticInOut',
+        series: [{
+          type: 'graph',
+          layout: 'force',
+          force: {
+            // initLayout:'circular',
+            edgeLength: 100,
+            repulsion: 50,
+            gravity: 0.01
+          },
+          data: json.nodes.map(function(node) {
+            return {
+              // x: node.x,
+              // y: node.y,
+              id: node.id,
+              name: node.size + '\n' + node.label,
+              symbol: node.symbol,
+              symbolSize: node.size,
+              draggable: true,
+              itemStyle: {
+                normal: {
+                  // color: node.color
+                }
+              },
+            };
+          }),
+          links: json.edges.map(function(edge) {
+            return {
+              source: edge.sourceID,
+              target: edge.targetID,
+              value: edge.size
+            };
+          }),
+          label: {
+            normal: {
+              show: true
+            }
+          },
+          cursor: 'pointer',
+          edgeLabel: {
+            normal: {
+              show: true,
+              formatter: '{c}'
+            }
+          },
+          roam: true,
+          focusNodeAdjacency: true,
+          lineStyle: {
+            normal: {
+              width: 0.8,
+              curveness: 0.4,
+              opacity: 0.7
+            }
+          }
+        }]
+      }, true);
+    });
+    console.log(option);
+  </script>
+</body>
+
+</html>

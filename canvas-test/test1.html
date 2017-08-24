@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>canvas line</title>
+  <script>
+    window.onload = function() {
+      var mycanvas = document.getElementById("mycanvas");
+      var context = mycanvas.getContext("2d");
+
+      context.strokeStyle = '#000';
+      context.lineWidth = 20;
+      context.lineJoin = 'miter';
+      context.beginPath();
+      context.moveTo(20, 10);
+      context.lineTo(80, 10);
+      context.lineTo(80, 70);
+      context.stroke();
+      context.closePath();
+
+      context.lineJoin = 'bevel';
+      context.beginPath();
+      context.moveTo(100, 10);
+      context.lineTo(160, 10);
+      context.lineTo(160, 70);
+      context.stroke();
+      context.closePath();
+
+      context.lineJoin = 'round';
+      context.beginPath();
+      context.moveTo(180, 10);
+      context.lineTo(240, 10);
+      context.lineTo(240, 70);
+      context.stroke();
+      context.closePath();
+
+
+    }
+  </script>
+</head>
+
+<body>
+  <canvas id="mycanvas" width="600" height="400"></canvas>
+</body>
+
+</html>
