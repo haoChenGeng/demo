@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/haochengeng/demo#readme",
   "devDependencies": {
+    "gulp-csso": "^3.0.0",
     "gulp-uglify": "^2.0.0"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1"
   }
 }
