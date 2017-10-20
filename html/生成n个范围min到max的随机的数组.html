@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		function getRand(m,n){
+// alert(1);
+			 
+			return Math.round(Math.random()*(m-n) + n);
+		}
+
+		function checkRepeat(n,arr) {
+// alert(2);
+			if(arr.indexOf(n) > -1) {
+				return true;
+			}else {
+				return false;
+			}
+		}
+
+		function unquie(arr) {
+			var res = [];
+			arr.forEach( function(element, index) {
+				if(res.indexOf(element) === -1) {
+					res.push(element);
+					console.log(index);
+				}
+			});
+			arr.filter(function(item,index) {
+				// console.log(index);
+			});
+			return res;
+		}
+
+		function fcn(n,max,min) {
+			var ret = [];
+			var isLength = n > 0 && n <= (max-min + 1) ? true : false;
+			var isNum = isNaN(n) ? true : false;
+			if(isNum && !isLength) return;
+			for(var i = 0; i<n; i++) {
+// alert(3);
+				var rnd = getRand(max,min);
+				if(checkRepeat(rnd,ret)) {
+					i--;
+				}else {
+					ret.push(rnd);
+				}			
+			}
+// alert(ret);
+			return ret;
+		}
+// console.log(fcn(4,32,2));
+	</script>
+</body>
+</html>
